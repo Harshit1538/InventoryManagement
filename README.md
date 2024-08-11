@@ -1,3 +1,6 @@
+Inventory Management System
+
+
 A simple Inventory Management System built using Java that allows users to efficiently track and manage inventory items, including adding, removing, and updating stock levels.
 
 Table of Contents
