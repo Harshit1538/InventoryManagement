@@ -28,18 +28,7 @@ To get a local copy of the project up and running, follow these steps.
 Prerequisites
 Java Development Kit (JDK) 8 or higher
 A Java IDE (such as IntelliJ IDEA, Eclipse, or Visual Studio Code)
-Installation
-Clone the repository:
 
-bash
-Copy code
-git clone https://github.com/your-username/inventory-management-system.git
-Navigate to the project directory:
-
-bash
-Copy code
-cd inventory-management-system
-Open the project in your preferred IDE.
 
 Usage
 Run the Main class to start the application.
