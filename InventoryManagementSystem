@@ -1,0 +1,118 @@
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+ 
+public class InventoryManagementSystem extends JFrame {
+ 
+   private JTable table;
+   private JTextField itemIdField, itemNameField, itemQuantityField, itemPriceField;
+   private DefaultTableModel tableModel;
+ 
+   public InventoryManagementSystem() {
+       // Set up the frame
+       setTitle("Inventory Management System");
+       setSize(800, 600);
+       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       setLocationRelativeTo(null);
+ 
+       // Create a panel
+       JPanel panel = new JPanel();
+       panel.setLayout(new BorderLayout());
+ 
+       // Create a table for inventory items
+       String[] columnNames = {"Item ID", "Item Name", "Quantity", "Price"};
+       tableModel = new DefaultTableModel(columnNames, 0);
+       table = new JTable(tableModel);
+       JScrollPane scrollPane = new JScrollPane(table);
+       panel.add(scrollPane, BorderLayout.CENTER);
+ 
+       // Create a form for adding new items
+       JPanel formPanel = new JPanel();
+       formPanel.setLayout(new GridLayout(5, 2));
+ 
+       formPanel.add(new JLabel("Item ID:"));
+       itemIdField = new JTextField();
+       formPanel.add(itemIdField);
+ 
+       formPanel.add(new JLabel("Item Name:"));
+       itemNameField = new JTextField();
+       formPanel.add(itemNameField);
+ 
+       formPanel.add(new JLabel("Quantity:"));
+       itemQuantityField = new JTextField();
+       formPanel.add(itemQuantityField);
+ 
+       formPanel.add(new JLabel("Price:"));
+       itemPriceField = new JTextField();
+       formPanel.add(itemPriceField);
+ 
+       JButton addButton = new JButton("Add Item");
+       formPanel.add(addButton);
+ 
+       JButton removeButton = new JButton("Remove Item");
+       formPanel.add(removeButton);
+ 
+       panel.add(formPanel, BorderLayout.SOUTH);
+ 
+       // Add action listeners
+       addButton.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               addItem();
+           }
+       });
+ 
+       removeButton.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               removeItem();
+           }
+       });
+ 
+       // Add the panel to the frame
+       add(panel);
+ 
+       // Show the frame
+       setVisible(true);
+   }
+ 
+   private void addItem() {
+       String itemId = itemIdField.getText();
+       String itemName = itemNameField.getText();
+       int quantity;
+       double price;
+ 
+       // Validate input
+       if (itemId.isEmpty() || itemName.isEmpty() || itemQuantityField.getText().isEmpty() || itemPriceField.getText().isEmpty()) {
+           JOptionPane.showMessageDialog(this, "Please fill all fields", "Error", JOptionPane.ERROR_MESSAGE);
+           return;       }
+ 
+       try {
+           quantity = Integer.parseInt(itemQuantityField.getText());
+           price = Double.parseDouble(itemPriceField.getText());
+       } catch (NumberFormatException e) {
+           JOptionPane.showMessageDialog(this, "Invalid quantity or price. Please enter valid numbers.", "Error", JOptionPane.ERROR_MESSAGE);
+           return;
+       }// Add item to the table
+       Object[] row = {itemId, itemName, quantity, price};
+       tableModel.addRow(row);
+       // Clear the form fields
+       itemIdField.setText("");
+       itemNameField.setText("");
+       itemQuantityField.setText("");
+       itemPriceField.setText("");
+   }
+   private void removeItem() {
+       int selectedRow = table.getSelectedRow();
+       if (selectedRow != -1) {
+           tableModel.removeRow(selectedRow);
+       } else {
+           JOptionPane.showMessageDialog(this, "Please select a row to remove");
+       }
+   }
+ public static void main(String[] args)
+  SwingUtilities.invokeLater(() -> new InventoryManagementSystem());
+   }
+}
